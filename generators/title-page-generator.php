@@ -99,11 +99,14 @@ class TitlePageGenerator extends Generator {
         }
 ?>
 		
-		<div class="title-page">
+		<div class="title-page" style="page-break-after: always;">
 			<div align=center><img src="title_image.png"></img></div>
 			<div class="title-page__year" <?php echo $ifDebugRedStyle?>><?php echo $debugWord . $year; ?></div>
 			<div class="title-page__recalendar"><?php echo $subtitle ?></div>
 		</div>
+        
+        <!-- Add this line below to fix the layout flow -->
+        <div style="clear: both; line-height: 0; height: 1px;"></div>
 <?php
 	}
 }
