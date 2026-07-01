@@ -215,8 +215,11 @@ try {
 	
 } catch (\Throwable $e) {
     echo "\nAK Error - This was caught: " . $e->getMessage();
+	
 	error_beep();
 	echo $e;
+	throw new Exception($e->getMessage()); // add my own throw in here, so the color is shown in terminal in ubunut
+
 }
 
 	

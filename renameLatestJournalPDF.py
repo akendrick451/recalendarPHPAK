@@ -5,6 +5,24 @@ from datetime import datetime
 from pathlib import Path
 
 
+def choose_filename (): 
+    # Get the current date
+    today = datetime.now()
+    yy = today.strftime("%y") # 2-digit year (e.g., '26')
+
+    # Check the month conditions
+    if today.month >= 6 & today.month < 11:
+        filename = f"Journal{yy}-Jul-Dec.pdf"
+        
+    elif today.month == 5:
+        # Prompt the user to enter a custom filename
+        custom_name = input("It is May. Enter your desired filename (without extension): ")
+        filename = f"{custom_name}.pdf"
+        
+    else:
+        filename = f"Journal{yy}-Jan-Jun.pdf"
+    return filename
+
 def rename_and_archive_latest_pdf(source_dir: Path | str, desired_name: str):
     """
     1. Finds the most recent .pdf in source_dir
@@ -95,7 +113,9 @@ if __name__ == "__main__":
     output_folder = Path.cwd() / "output"
 
     # Choose your journal name
-    journal_name = "Journal26-Jan-Jun"
+    journal_name = choose_filename()
+
     # journal_name = "Journal25-Jul-Dec"
+
 
     rename_and_archive_latest_pdf(output_folder, journal_name)
