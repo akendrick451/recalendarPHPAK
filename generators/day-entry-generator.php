@@ -295,7 +295,8 @@ protected function GenerateFutureImaginationQuestionOncePerWeek($dateForToday) :
 				<?php echo $this->GenerateMeGratitudeOncePerWeek($dateNotImmutable); ?>
 				<tr><td colspan="5" class="smallerTextLight">Negativity bias leads us to focus on negative experiences, which can skew our perception of reality & affect wellbeing. To counteract this, practice mindfulness, focus on positive experiences & consciously cultivate gratitude to shift attention. Regularly engaging in these steps can enhance positivity & improve overall mental health.</td></tr>
 				<tr><td colspan="2" class="content-box-height">What I learnt yesterday?</td><td colspan="3" style="border-bottom:1px solid #AAA"></td></tr>
-				<tr><td colspan="1" class="content-box-height">Current Emotions? <a href="#linkToEmotions<?php echo $this->week_number ?>">link</a></td><td colspan="4" style="border-bottom:1px solid #AAA"></td></tr>
+				<tr><td colspan="2" class="content-box-height">What is God asking of me, or showing me?</td><td colspan="3" style="border-bottom:1px solid #AAA"></td></tr>
+				<tr><td colspan="2" class="content-box-height">Two minute body focus? </td><td colspan="3" style="border-bottom:1px solid #AAA"></td></tr>
 				<?php 
 					echo $this->GenerateFutureImaginationQuestionOncePerWeek($dateNotImmutable); 
 				?>
@@ -352,10 +353,10 @@ protected function GenerateFutureImaginationQuestionOncePerWeek($dateForToday) :
 			// AK NEW TEXT DEC 2024. TRYING TO MAKE MONTHLY NOTES SPECIFIC TO MONTH
 			$month_notes_in_day_all = $this->config->get( Config::MONTHLY_NOTES_2 );
 			$month_notes_in_day = $month_notes_in_day_all[ (int) $this->day->format( 'n' ) ] ?? $this->config->get( Config::MONTHLY_NOTES_COMMON ); // lowecase n for month number
-			$month_notes_in_day[0] = $month_name. " " . $month_notes_in_day[0]; // add month name to first item in month list
+			array_unshift($month_notes_in_day, $month_name. " Focus" ); 
 			$month_notes_in_day_common = $this->config->get( Config::MONTHLY_NOTES_COMMON );
 		
-			$month_notes_combined = array_unique(array_merge($month_notes_in_day_common, $month_notes_in_day));
+			$month_notes_combined = array_unique(array_merge( $month_notes_in_day, $month_notes_in_day_common));
 			// ak thinks this prints to html... how to print to terminal??
 
 				if (count($month_notes_combined)>18) {

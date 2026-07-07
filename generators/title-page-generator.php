@@ -98,20 +98,27 @@ class TitlePageGenerator extends Generator {
 		list($width, $height, $type) = getimagesize($title_image_file_and_path) ?: [0, 0, 0];
 
         
+        if($int_month_start=7) {
+            $titleWordColor = " style='color:blue'";
+            
+        } else {
+            $titleWordColor = " style='color:green'";
+        }
 
 		checkAndResizeImageIfRequired($title_image_file_and_path);
         if ($blDebug) {
-            $ifDebugRedStyle = " style='color:red'";
+            $titleWordColor = " style='color:red'";
             $debugWord = "DEBUG!";
         } else {
-            $ifDebugRedStyle = "";
+          
             $debugWord = "";
         }
+
 
 ?>
 		<div class="title-page" style="page-break-after: always;">
 			<div align=center><img src="title_image.png"></img></div>
-			<div class="title-page__year" <?php echo $ifDebugRedStyle?>><?php echo $debugWord . $year; ?></div>
+			<div class="title-page__year" <?php echo $titleWordColor?>><?php echo $debugWord . $year; ?></div>
             <div>Months - <?php echo $month_start_name . " to " . $month_finish_name; ?></div>
 			<div class="title-page__recalendar"><?php echo $subtitle ?></div>
 		</div>

@@ -197,7 +197,7 @@ class Config {
 				 4 => [ 'Pacing ME 30%',  'Couns Business 10%', 'Get Healthy 15%' , 'House Deposit 15%' ], 
 				 5 =>[ 'Jog' ], 
 				 6 =>[ '' ], 
-				 7 =>[ '' ], 
+				 7 =>[ 'New job','Walk 10k', 'Try vyvanse again', 'Solution focussed', '&nbsp;<br>'], 
 				 8 => [ '' ],  
 				 9 => [  'Big shoulders' ], 
 				 10 =>[ '' ],
@@ -206,7 +206,7 @@ class Config {
 				 
 			],
 			self::MONTHLY_NOTES_COMMON => [ //is this included in all notes, or only if specified month is blank- included in ALL MONTHS
-				'Monthly Notes','<b>Longer</b>', 'Get Healthy 45%', 'Affirmation thpy Fr', 
+				'<b>Long Term</b>', 'Get Healthy 50%', 
 				'<b>Exciting</b>', '..Build info screen wall'
 			],
 			self::WEEKLY_REPEATS => [
@@ -245,7 +245,8 @@ class Config {
 
 			self::CURRENT_READING => [
 				2 => ['Current Reading', 'The Healing.. Vagus 30%', 'Non Violent (Negotiation)', 'Psychic Wholeness, Baars', ],
-				7 => ['Current Reading', '' ],
+				5 => ['Current Reading', 'Complex PTSD surviving to thriving', 'Death on the Nile',],
+				7 => ['Current Reading', 'Rebus', 'Strike', 'Self-Made Man' ],
 				9 => ['Current Reading', ''],
 				10 => ['Current Reading',  "The Healing Power of Vagus, 0%",	],
 				11 => ['Current Reading', ''	],

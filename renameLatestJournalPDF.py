@@ -12,15 +12,15 @@ def choose_filename ():
 
     # Check the month conditions
     if today.month >= 6 & today.month < 11:
-        filename = f"Journal{yy}-Jul-Dec.pdf"
+        filename = f"Journal{yy}-Jul-Dec"
         
     elif today.month == 5:
         # Prompt the user to enter a custom filename
         custom_name = input("It is May. Enter your desired filename (without extension): ")
-        filename = f"{custom_name}.pdf"
+        filename = f"{custom_name}"
         
     else:
-        filename = f"Journal{yy}-Jan-Jun.pdf"
+        filename = f"Journal{yy}-Jan-Jun"
     return filename
 
 def rename_and_archive_latest_pdf(source_dir: Path | str, desired_name: str):
