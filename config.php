@@ -197,7 +197,7 @@ class Config {
 				 4 => [ 'Pacing ME 30%',  'Couns Business 10%', 'Get Healthy 15%' , 'House Deposit 15%' ], 
 				 5 =>[ 'Jog' ], 
 				 6 =>[ '' ], 
-				 7 =>[ 'New job','Walk 10k', 'Try vyvanse again', 'Solution focussed', '&nbsp;<br>'], 
+				 7 =>[ 'New job','Walk 10k', 'Try vyvanse again', 'Solution focussed', 'To be where I am', '&nbsp;<br>'], 
 				 8 => [ '' ],  
 				 9 => [  'Big shoulders' ], 
 				 10 =>[ '' ],
