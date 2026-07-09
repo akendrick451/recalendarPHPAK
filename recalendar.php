@@ -327,7 +327,7 @@ $dom = new \DOMDocument();    // Wrap in fragment + utf-8
 				echo "have just written html file for debug";
 			}
 	//		echo "Then write html debug 2";
-
+/*
 			$tidy = new \tidy;
 			$cleanHtml = $tidy->repairString($this->html , [
 				'output-xhtml'   => true,
@@ -339,62 +339,64 @@ $dom = new \DOMDocument();    // Wrap in fragment + utf-8
 			echo "finished tidy html";
 			if ($tidy->errorBuffer) {
     error_log("Tidy warnings: " . $tidy->errorBuffer);
-	echo "Tidy warnings: " . $tidy->errorBuffer;
-    // Or echo for debug: echo "<pre>" . htmlspecialchars($tidy->errorBuffer) . "</pre>";
-}
+	echo "Tidy warnings: " . $tidy->errorBuffer;*/
+    // Or echo for debug: echo "<pre>" . htmlspecialchars($tidy->errorBuffer) . "</pre>"; } 
 
 
-// Usage in your generate.php
-			echo "Check malformed html";
+			/*
+			// Usage in your generate.php
+						echo "Check malformed html";
 
-$check = $this->detectMalformedAttributes($this->html );
-if (!$check['valid']) {
-    error_log("Malformed HTML detected: " . print_r($check['errors'], true));
-	$lines = explode("\n", $this->html);
-$problem_lines = [7, 868];  // adjust if line numbers shift with added <?xml...>
-foreach ($problem_lines as $num) {
-    $index = $num - 1;  // 0-based
-    if (isset($lines[$index])) {
-        echo "Line $num: " . htmlspecialchars($lines[$index]) . "\n";
-    }
-}
-    // Optionally throw exception or fix automatically
-    die("Bad HTML - unclosed attribute likely present");
-}
-			echo "Check malformed html finished";
-
-
-
-// Quick scan for suspicious class attributes
-preg_match_all('/class\s*=\s*([\'"])(.*?)(?<!\\\\)\1?/is', $this->html, $matches, PREG_SET_ORDER);
-
-$problems = [];
-foreach ($matches as $m) {
-    $quoteType = $m[1];
-    $value     = $m[2];
-    $count     = substr_count($value, $quoteType);
-    if ($count % 2 !== 0) {
-        $problems[] = "Unbalanced $quoteType quote in class value: '$value'";
-    }
-}
-
-if ($problems) {
-	echo "Unclosed quotes in class attributes:\n" . implode("\n", $problems);
-    error_log("Unclosed quotes in class attributes:\n" . implode("\n", $problems));
-    die("Found potential unclosed class quotes - check logs");
-} else {
-    echo "No obvious unbalanced quotes in class attributes.\n";
-}
+			$check = $this->detectMalformedAttributes($this->html );
+			if (!$check['valid']) {
+				error_log("Malformed HTML detected: " . print_r($check['errors'], true));
+				$lines = explode("\n", $this->html);
+			$problem_lines = [7, 868];  // adjust if line numbers shift with added <?xml...>
+			foreach ($problem_lines as $num) {
+				$index = $num - 1;  // 0-based
+				if (isset($lines[$index])) {
+					echo "Line $num: " . htmlspecialchars($lines[$index]) . "\n";
+				}
+			}
+				// Optionally throw exception or fix automatically
+				die("Bad HTML - unclosed attribute likely present");
+			}
+						echo "Check malformed html finished";
 
 
-$dom = new \DOMDocument();
-@$dom->loadHTML('<?xml encoding="UTF-8">' . $this->html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD | LIBXML_NOWARNING | LIBXML_NOERROR);
-$clean_html = $dom->saveHTML();
 
-// Compare lengths or diff for changes
-if (strlen($clean_html) !== strlen($this->html)) {
-    error_log("DOM normalized HTML - length changed from " . strlen($this->html) . " to " . strlen($clean_html));
-}
+			// Quick scan for suspicious class attributes
+			preg_match_all('/class\s*=\s*([\'"])(.*?)(?<!\\\\)\1?/is', $this->html, $matches, PREG_SET_ORDER);
+
+			$problems = [];
+			foreach ($matches as $m) {
+				$quoteType = $m[1];
+				$value     = $m[2];
+				$count     = substr_count($value, $quoteType);
+				if ($count % 2 !== 0) {
+					$problems[] = "Unbalanced $quoteType quote in class value: '$value'";
+				}
+			}
+
+			if ($problems) {
+				echo "Unclosed quotes in class attributes:\n" . implode("\n", $problems);
+				error_log("Unclosed quotes in class attributes:\n" . implode("\n", $problems));
+				die("Found potential unclosed class quotes - check logs");
+			} else {
+				echo "No obvious unbalanced quotes in class attributes.\n";
+			}
+
+
+			$dom = new \DOMDocument();
+			@$dom->loadHTML('<?xml encoding="UTF-8">' . $this->html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD | LIBXML_NOWARNING | LIBXML_NOERROR);
+			$cleanHtml = $dom->saveHTML();
+			*/
+			// Compare lengths or diff for changes
+			$cleanHtml = $this->html;
+			echo "CHECK HTML.. start of html is " . substr($this->html, 0, 30);
+			if (strlen($cleanHtml) !== strlen($this->html)) {
+				error_log("DOM normalized HTML - length changed from " . strlen($this->html) . " to " . strlen($cleanHtml));
+			}
 			$this->mpdf->WriteHTML( $cleanHtml);
 			//echo "Write html debug 3";
 			//echo $this->html;

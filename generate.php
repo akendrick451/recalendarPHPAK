@@ -155,8 +155,14 @@ try {
 
 	echo "\nSetup done.. create new mpdf...";
 	// creates a calendar and saves it in ReCalendar.pdf
+
+	$original = error_reporting();
+	error_reporting(E_ALL & ~E_WARNING & ~E_NOTICE);
+
+
 	$mpdf = new \Mpdf\Mpdf( [
 	    'tempDir' => __DIR__ . '/my-mpdf-temp',
+		'packTableData' => false, // AK table errors March 2026
 		'debug'              => true,     // shows more info
     
 		'fontDir' => array_merge( $fontDirs, [
@@ -181,6 +187,7 @@ try {
 
 	echo "trying to generate now...";
 	$recalendar->generate();
+	error_reporting($original);
 	$time_end = microtime(true);
 	echo 'Finish at '.  (new \DateTime())->format( 'Y-m-d H:i:s' );
 
