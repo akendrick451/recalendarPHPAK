@@ -426,7 +426,7 @@ td.calendar__week-number {
 	text-align: justify;
 
 }
-s
+
 .content-box-line-ak-strong {
 	width: 100%;
 	border-bottom: 1px solid #AAA;
@@ -509,10 +509,9 @@ s
 	display: inline-block;	
 	margin: 5px;
 	background: green;
-	
-	border: 1px solid #ccc;
-  
   }
+
+
   #row1Eis {
    height:50pt;
   }

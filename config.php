@@ -92,7 +92,7 @@ class Config {
 			// Useful if you want to track your college year, for example.
 			// You could then set this to 10 (October) and the calendar
 			// would then be generated for 12 months starting from October.
-			self::MONTH => 1, //start month
+			self::MONTH => 7, //start month
 			// The number of months you want this calendar to be for.
 			// Useful if you want a calendar for the quarter (3) or a 15 month calendar.
 			self::MONTH_COUNT => 7,
@@ -102,6 +102,7 @@ class Config {
 			//self::YEAR => (int) date( 'Y' ),
 			self::AFFIRMATIONS => [
 				"I can do all things through Him who gives me strength",
+				"Some things are hard, but I can do hard things",
 				"I am capable of succeeding",
 				"I am proud of my efforts",
 				"I am capable of achieving my goals with effort and perseverance",
@@ -192,11 +193,11 @@ class Config {
 			
 				 1 => ['Focus on Business', 'Book Holidays x2!','Book Music and Theatre', 'Sell personal diary service $10',  ] , 
 				 2 => [   'Self Compassion', '2x clients', 'Cholesterol'	], 
-				 3 => [ 'Be More social', '2x Climbing'] , 
+				 3 => [ 'Health/Rest', 'You may ...', 'Trust in God', 'Take Care of Everything'] , 
 				 4 => [ 'Pacing ME 30%',  'Couns Business 10%', 'Get Healthy 15%' , 'House Deposit 15%' ], 
 				 5 =>[ 'Jog' ], 
 				 6 =>[ '' ], 
-				 7 =>[ '' ], 
+				 7 =>[ 'New job','Walk 10k', 'Try vyvanse again', 'Solution focussed', '&nbsp;<br>'], 
 				 8 => [ '' ],  
 				 9 => [  'Big shoulders' ], 
 				 10 =>[ '' ],
@@ -205,7 +206,7 @@ class Config {
 				 
 			],
 			self::MONTHLY_NOTES_COMMON => [ //is this included in all notes, or only if specified month is blank- included in ALL MONTHS
-				'Monthly Notes','<b>Longer</b>', 'Get Healthy 45%', 'Affirmation thpy Fr', 
+				'<b>Long Term</b>', 'Get Healthy 50%', 
 				'<b>Exciting</b>', '..Build info screen wall'
 			],
 			self::WEEKLY_REPEATS => [
@@ -244,7 +245,8 @@ class Config {
 
 			self::CURRENT_READING => [
 				2 => ['Current Reading', 'The Healing.. Vagus 30%', 'Non Violent (Negotiation)', 'Psychic Wholeness, Baars', ],
-				7 => ['Current Reading', '' ],
+				5 => ['Current Reading', 'Complex PTSD surviving to thriving', 'Death on the Nile',],
+				7 => ['Current Reading', 'Rebus', 'Strike', 'Self-Made Man' ],
 				9 => ['Current Reading', ''],
 				10 => ['Current Reading',  "The Healing Power of Vagus, 0%",	],
 				11 => ['Current Reading', ''	],

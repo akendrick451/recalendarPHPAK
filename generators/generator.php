@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace ReCalendar;
 
+//include("../akfunctions.php"); // maybe for beep
 
 function PadIfSingleDigit(string $stringHour) : string {
 	if (strlen($stringHour) == 1) {

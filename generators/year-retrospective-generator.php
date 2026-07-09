@@ -86,7 +86,7 @@ class YearRetrospectiveGenerator extends Generator {
 				}
 				
 				//$yearly_activites_table = $yearly_activites_table . "<td class='smallerText>"; // LINE THAT CRASH|ES SYSTEM JAN 2026 due to unclosed class
-				$yearly_activites_table = $yearly_activites_table . "<td class='smallerText'>";
+				$yearly_activites_table = $yearly_activites_table . "<td class='smallerText' style='vertical-align:top'>";
 
 				$yearly_activites_table = $yearly_activites_table . "<b>". $this->convert_month_number_to_name($month) . "</b><br>";
 
@@ -94,7 +94,7 @@ class YearRetrospectiveGenerator extends Generator {
 						$yearly_activites_table = $yearly_activites_table . $each_activity . "<br>";
 
 					}
-				$yearly_activites_table .= "<br>&bsp;<br>"; // break before books
+				$yearly_activites_table .= "<br>&nbsp;<br>"; // break before books
 				if (array_key_exists($month, $reading_list_by_month))	{
 				$this_month_reading = $reading_list_by_month[$month];
 				if (!($this_month_reading === NULL)) {

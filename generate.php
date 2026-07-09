@@ -18,6 +18,21 @@ date_default_timezone_set('Australia/Melbourne');
 $time_start = microtime(true); 
 $intRepeat = 100;
 
+// Place this at the very top of your entry script
+if (php_sapi_name() === 'cli' || php_sapi_name() === 'cli-server') {
+    
+    // Catch standard PHP errors (warnings, notices)
+    set_error_handler(function($errno, $errstr, $errfile, $errline) {
+        echo "\033[31m[Error $errno] $errstr in $errfile on line $errline\033[0m\n";
+        return true; 
+    });
+
+    // Catch unhandled exceptions
+    set_exception_handler(function($exception) {
+        echo "\033[31m[Fatal Exception] " . $exception->getMessage() . "\033[0m\n";
+        echo $exception->getTraceAsString() . "\n";
+    });
+}
 
 
 echo str_repeat("=", $intRepeat) . "\n";
@@ -207,8 +222,11 @@ try {
 	
 } catch (\Throwable $e) {
     echo "\nAK Error - This was caught: " . $e->getMessage();
+	
 	error_beep();
 	echo $e;
+	throw new Exception($e->getMessage()); // add my own throw in here, so the color is shown in terminal in ubunut
+
 }
 
 	

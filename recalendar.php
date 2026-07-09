@@ -55,7 +55,11 @@ class ReCalendar {
 		$end = $start->modify( "$month_count months" );
 
 		$this->generate_year_overview(true);
-		
+		// need new page here.... how do i do that?
+	//	$this->html .= '<br />';
+	//	$this->add_page();
+
+
 		$start = $start->modify( 'monday this week' );
 		$interval = new \DateInterval( 'P1W' );
 		$period = new \DatePeriod( $start, $interval, $end );
@@ -63,7 +67,7 @@ class ReCalendar {
 		foreach( $period as $week ) {
 			$this->generate_week( $week, $end ); // has generate day, which also has generate month revdiew and year review
 			// if week -  26 0 do summary/year review - generate_year_retrospective
-			$this->write_html();
+			$this->write_html(); // is this a debug line?
 		}
 		$this->generate_year_retrospective( $week );
 		$this->write_html();
@@ -187,13 +191,18 @@ public function openPdfAllSystems($filepath) {
 		//$year_overview_generator2 = new YearOverviewGenerator2( $start, $end, $this->config );
 		//$this->add_page();
 		//$this->append_html( $year_overview_generator->generate() );
-		$this->add_page();
+		//$this->add_page();
+		//$this->append_html("<div style='display: block; clear: both; page-break-before: always;'>");
+
+		
 		if ( $blMainYearOverview ) {
+
 			$this->append_html( $year_overview_generator->generate() );
 		} else  {
 			$this-> append_html("<h1>Important Events in Year Reminder</h1>");
 			$this->append_html( $year_overview_generator->generate_actual_big_calendar() );
 		}
+		$this->append_html("</div>");
 	}
 
 	private function generate_month_overview( \DateTimeImmutable $month ) : void {
@@ -314,6 +323,7 @@ $dom = new \DOMDocument();    // Wrap in fragment + utf-8
 }
 
 	private function write_html() : void {
+		//what does thsi function do?
 		try {
 			if ( empty( $this->html ) ) {
 				return;
@@ -329,6 +339,8 @@ $dom = new \DOMDocument();    // Wrap in fragment + utf-8
 	//		echo "Then write html debug 2";
 /*
 			$tidy = new \tidy;
+
+/*			$tidy = new \tidy;
 			$cleanHtml = $tidy->repairString($this->html , [
 				'output-xhtml'   => true,
 				'wrap'           => 0,
@@ -336,68 +348,76 @@ $dom = new \DOMDocument();    // Wrap in fragment + utf-8
 				'show-body-only' => true,
 			], 'utf8');
 
-			echo "finished tidy html";
+			//echo "finished tidy html"; 
 			if ($tidy->errorBuffer) {
-    error_log("Tidy warnings: " . $tidy->errorBuffer);
-	echo "Tidy warnings: " . $tidy->errorBuffer;*/
-    // Or echo for debug: echo "<pre>" . htmlspecialchars($tidy->errorBuffer) . "</pre>"; } 
+				error_log("Tidy warnings: " . $tidy->errorBuffer);
+				echo "Tidy warnings: " . $tidy->errorBuffer;
+    			// Or echo for debug: echo "<pre>" . htmlspecialchars($tidy->errorBuffer) . "</pre>";
+			} // end if
 
+*/
+		// Usage in your generate.php
+				//	echo "Check malformed html";
 
-			/*
-			// Usage in your generate.php
-						echo "Check malformed html";
-
-			$check = $this->detectMalformedAttributes($this->html );
-			if (!$check['valid']) {
-				error_log("Malformed HTML detected: " . print_r($check['errors'], true));
-				$lines = explode("\n", $this->html);
-			$problem_lines = [7, 868];  // adjust if line numbers shift with added <?xml...>
-			foreach ($problem_lines as $num) {
-				$index = $num - 1;  // 0-based
-				if (isset($lines[$index])) {
-					echo "Line $num: " . htmlspecialchars($lines[$index]) . "\n";
-				}
+		//$check = $this->detectMalformedAttributes($this->html );
+		/*
+		if (!$check['valid']) {
+			error_log("Malformed HTML detected: " . print_r($check['errors'], true));
+			$lines = explode("\n", $this->html);
+		$problem_lines = [7, 868];  // adjust if line numbers shift with added <?xml...>
+		foreach ($problem_lines as $num) {
+			$index = $num - 1;  // 0-based
+			if (isset($lines[$index])) {
+				echo "Line $num: " . htmlspecialchars($lines[$index]) . "\n";
 			}
-				// Optionally throw exception or fix automatically
-				die("Bad HTML - unclosed attribute likely present");
+		}
+			// Optionally throw exception or fix automatically
+			die("Bad HTML - unclosed attribute likely present");
+		}
+					echo "Check malformed html finished";
+
+
+
+		// Quick scan for suspicious class attributes
+		preg_match_all('/class\s*=\s*([\'"])(.*?)(?<!\\\\)\1?/is', $this->html, $matches, PREG_SET_ORDER);
+
+		$problems = [];
+		foreach ($matches as $m) {
+			$quoteType = $m[1];
+			$value     = $m[2];
+			$count     = substr_count($value, $quoteType);
+			if ($count % 2 !== 0) {
+				$problems[] = "Unbalanced $quoteType quote in class value: '$value'";
 			}
-						echo "Check malformed html finished";
+		}
+			*/
+		/*
 
+		if ($problems) {
+			echo "Unclosed quotes in class attributes:\n" . implode("\n", $problems);
+			error_log("Unclosed quotes in class attributes:\n" . implode("\n", $problems));
+			die("Found potential unclosed class quotes - check logs");
+		} else {
+			echo "No obvious unbalanced quotes in class attributes.\n";
+		}
+		*/
 
-
-			// Quick scan for suspicious class attributes
-			preg_match_all('/class\s*=\s*([\'"])(.*?)(?<!\\\\)\1?/is', $this->html, $matches, PREG_SET_ORDER);
-
-			$problems = [];
-			foreach ($matches as $m) {
-				$quoteType = $m[1];
-				$value     = $m[2];
-				$count     = substr_count($value, $quoteType);
-				if ($count % 2 !== 0) {
-					$problems[] = "Unbalanced $quoteType quote in class value: '$value'";
-				}
-			}
-
-			if ($problems) {
-				echo "Unclosed quotes in class attributes:\n" . implode("\n", $problems);
-				error_log("Unclosed quotes in class attributes:\n" . implode("\n", $problems));
-				die("Found potential unclosed class quotes - check logs");
-			} else {
-				echo "No obvious unbalanced quotes in class attributes.\n";
-			}
-
-
+		$clean_html = $this->html; // put in to comment out below check on dom loadhtml
+		/*
+					
 			$dom = new \DOMDocument();
 			@$dom->loadHTML('<?xml encoding="UTF-8">' . $this->html, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD | LIBXML_NOWARNING | LIBXML_NOERROR);
-			$cleanHtml = $dom->saveHTML();
-			*/
+			$clean_html = $dom->saveHTML();
+
 			// Compare lengths or diff for changes
-			$cleanHtml = $this->html;
-			echo "CHECK HTML.. start of html is " . substr($this->html, 0, 30);
-			if (strlen($cleanHtml) !== strlen($this->html)) {
-				error_log("DOM normalized HTML - length changed from " . strlen($this->html) . " to " . strlen($cleanHtml));
+
+			if (strlen($clean_html) !== strlen($this->html)) {
+				error_log("DOM normalized HTML - length changed from " . strlen($this->html) . " to " . strlen($clean_html));
 			}
-			$this->mpdf->WriteHTML( $cleanHtml);
+	*/
+		//	$this->mpdf->WriteHTML( $cleanHtml);
+			$this->mpdf->WriteHTML( $this->html);
+
 			//echo "Write html debug 3";
 			//echo $this->html;
 			// only do this for a small size		
@@ -407,13 +427,13 @@ $dom = new \DOMDocument();    // Wrap in fragment + utf-8
 				//echo " debugPrint2 HTML Is.... this->blDebugPrintedHTMLOnce is [" . $this->blDebugPrintedHTMLOnce . "] SHOULD BE TRUE NOW";
 				echo "... run file put contents out htmll debug";
 				file_put_contents("output//recalendarForPDF" . $dateNow->format('Y-m-d-H-i-s') . ".html", $this->all_html_ak);
-
+//
 			}
 
 			$this->html = '';
-		} 		catch ( \Exception $e ) {
-			echo "Write html error";
-			echo  $e->getMessage() ;
-		}
-	} //end function
+		} 	catch ( \Exception $e ) {
+				echo "Write html error";
+				echo  $e->getMessage() ;
+		} // end try catch
+	} //end function write_html
 } // end class

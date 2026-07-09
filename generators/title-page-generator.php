@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 namespace ReCalendar;
+use DateTime;
 
 require_once __DIR__ . '/generator.php';
 
@@ -62,15 +63,16 @@ function checkAndResizeImageIfRequired($source_path, $max_width = 800, $max_heig
     return $success;
 }
 
-
+function getMonthName(int $monthNum): string {
+     $strMonthNum = strval ($monthNum);
+     return DateTime::createFromFormat('!m', $strMonthNum)->format('F');
+    }
 
 
 class TitlePageGenerator extends Generator {
 	protected function generate_anchor_string() : ?string {
 		return 'title_page';
 	}
-
-
 
 	protected function generate_content() : void {
         
@@ -88,22 +90,41 @@ class TitlePageGenerator extends Generator {
 		$year = (int) $this->config->get( Config::YEAR );
 		$subtitle = $this->config->get( Config::SUBTITLE );
 		$title_image_file_and_path = "title_image.jpg";
+        $int_month_start = (int) $this->config-> get(Config::MONTH);
+        $month_start_name = getMonthName( $int_month_start );
+
+        $num_months = (int) $this->config-> get(Config::MONTH_COUNT);
+        $month_finish_name = getMonthName( $int_month_start + ($num_months-1) );
 		list($width, $height, $type) = getimagesize($title_image_file_and_path) ?: [0, 0, 0];
+
+        
+        if($int_month_start=7) {
+            $titleWordColor = " style='color:blue'";
+            
+        } else {
+            $titleWordColor = " style='color:green'";
+        }
+
 		checkAndResizeImageIfRequired($title_image_file_and_path);
         if ($blDebug) {
-            $ifDebugRedStyle = " style='color:red'";
+            $titleWordColor = " style='color:red'";
             $debugWord = "DEBUG!";
         } else {
-            $ifDebugRedStyle = "";
+          
             $debugWord = "";
         }
+
+
 ?>
-		
-		<div class="title-page">
+		<div class="title-page" style="page-break-after: always;">
 			<div align=center><img src="title_image.png"></img></div>
-			<div class="title-page__year" <?php echo $ifDebugRedStyle?>><?php echo $debugWord . $year; ?></div>
+			<div class="title-page__year" <?php echo $titleWordColor?>><?php echo $debugWord . $year; ?></div>
+            <div>Months - <?php echo $month_start_name . " to " . $month_finish_name; ?></div>
 			<div class="title-page__recalendar"><?php echo $subtitle ?></div>
 		</div>
+        
+        <!-- Add this line below to fix the layout flow -->
+        <div style="clear: both; line-height: 0; height: 1px;"></div>
 <?php
-	}
-}
+	} //close function
+} // close class
